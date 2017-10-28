@@ -2,7 +2,6 @@ package yf
 
 import (
 	"testing"
-	"time"
 )
 
 func init() {
@@ -11,11 +10,13 @@ func init() {
 
 func TestGetStock(t *testing.T) {
 	symbol := "GOOG"
-	start := time.Now().AddDate(0, -3, 0)
-	end := time.Now()
 
-	err := GetStock(symbol, start, end)
+	stock, err := GetStock(symbol, RangeOneYear, IntervalOneDay)
 	if err != nil {
 		t.Fatal(err)
+	}
+
+	if stock.Meta.Symbol != symbol {
+		t.Fatalf("Unexpected Symbol: expected=%v, got=%v", symbol, stock.Meta.Symbol)
 	}
 }
